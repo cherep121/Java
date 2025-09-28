@@ -155,6 +155,148 @@ public class Main{
 
 
 
+    public static void Task4(){
+        System.out.println("\n~~~~ Лабораторная работа №4 ~~~~");
+
+        Scanner scanner = new Scanner(System.in);
+        OddEvenSeparator separator = new OddEvenSeparator();
+        boolean run = true;
+
+        while (run){
+            System.out.println("\n$$$$ Меню чисел $$$$");
+            System.out.println("(1) ---- Добавить число");
+            System.out.println("(2) ---- Четные числа");
+            System.out.println("(3) ---- Нечетные числа");
+            System.out.println("(4) ---- Все числа");
+            System.out.println("(5) ---- Очистить список");
+            System.out.println("(6) ---- Вернуться в главное меню");
+
+            int choice = scanner.nextInt();
+
+            switch (choice){
+                case 1:
+                    System.out.print("Введите число: ");
+                    int number = scanner.nextInt();
+                    separator.addNumber(number);
+                    Enter(scanner);
+                    break;
+                case 2:
+                    separator.even();
+                    Enter(scanner);
+                    break;
+                case 3:
+                    separator.odd();
+                    Enter(scanner);
+                    break;
+                case 4:
+                    separator.showAll();
+                    Enter(scanner);
+                    break;
+                case 5:
+                    separator.clear();
+                    Enter(scanner);
+                    break;
+                case 6:
+                    run = false;
+                    System.out.println("//// Возврат в главное меню ////");
+                    Enter(scanner);
+                    break;
+                default:
+                    System.out.println("!!!! Неверный ввод, попробуйте снова !!!!");
+                    Enter(scanner);
+            }
+        }
+    }
+
+
+
+    public static void Task5(){
+        System.out.println("\n~~~~ Лабораторная работа №5 ~~~~");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите количество строк: ");
+        int rows = scanner.nextInt();
+        System.out.print("Введите количество столбцов: ");
+        int cols = scanner.nextInt();
+
+        Table table = new Table(rows, cols);
+        boolean run = true;
+
+        while (run){
+            System.out.println("\n$$$$ Меню таблицы $$$$");
+            System.out.println("(1) ---- Записать в ячейку значение");
+            System.out.println("(2) ---- Получить знаяение из ячейки");
+            System.out.println("(3) ---- Вся таблица");
+            System.out.println("(4) ---- Среднеее арифметическое");
+            System.out.println("(5) ---- Заполнить случайными числами ");
+            System.out.println("(6) ---- Размеры таблицы");
+            System.out.println("(7) ---- вернутся в главное меню");
+
+            int choice = scanner.nextInt();
+
+            switch (choice){
+                case 1:
+                    System.out.print("Введите номер строки от 0 до " + (rows-1));
+                    int row = scanner.nextInt();
+                    System.out.print("Введите номер столбца от 0 до " + (cols-1));
+                    int col = scanner.nextInt();
+                    System.out.print("Введите значение: ");
+                    int value = scanner.nextInt();
+                    table.setValue(row, col, value);
+                    Enter(scanner);
+                    break;
+                case 2:
+                    System.out.print("Введите номер строки jn 0 до " + (rows-1));
+                    int getRow = scanner.nextInt();
+                    System.out.print("Введите номер столбца от 0 до " + (cols-1));
+                    int getCol = scanner.nextInt();
+                    int result = table.getValue(getRow, getCol);
+                    if (result != -1){
+                        System.out.println("Значение в ячейке [" + getRow + "][" + getCol + "] = " + result);
+                    }
+                    Enter(scanner);
+                    break;
+                case 3:
+                    System.out.println(table.toString());
+                    Enter(scanner);
+                    break;
+                case 4:
+                    System.out.printf("Среднее арифметическое: %.2f\n", table.average());
+                    Enter(scanner);
+                    break;
+                case 5:
+                    System.out.print("Введите минимальное значение: ");
+                    int min = scanner.nextInt();
+                    System.out.print("Введите максимальное значение: ");
+                    int max = scanner.nextInt();
+                    table.fillRandom(min, max);
+                    Enter(scanner);
+                    break;
+                case 6:
+                    System.out.println("Размеры таблицы: " + table.rows() + " строк, " + table.cols() + " столбцов");
+                    Enter(scanner);
+                    break;
+                case 7:
+                    run = false;
+                    System.out.println("//// Возврат в главное меню ////");
+                    Enter(scanner);
+                    break;
+                default:
+                    System.out.println("!!!! Неверный ввод, попробуйте снова !!!!");
+            }
+        }
+    }
+
+
+
+    public static void Task6(){
+        System.out.println("К сожалению данное задание я не сделал :(");
+        Scanner scanner = new Scanner(System.in);
+        Enter(scanner);
+    }
+
+
+
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
@@ -174,13 +316,13 @@ public class Main{
                     Task3();
                     break;
                 case 4:
-                    //Task4();
+                    Task4();
                     break;
                 case 5:
-                    //Task5();
+                    Task5();
                     break;
                 case 6:
-                    //Task6();
+                    Task6();
                     break;
                 case 7:
                     //Task7();
