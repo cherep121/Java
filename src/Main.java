@@ -1,5 +1,6 @@
 import java.util.Scanner;
-
+import java.util.Map;
+import java.util.HashMap;
 
 public class Main{
 
@@ -297,6 +298,109 @@ public class Main{
 
 
 
+    public static void Task7(){
+        System.out.println("\n~~~~ Лабораторная работа №7 ~~~~");
+
+        Scanner scanner = new Scanner(System.in);
+        FileAnalyzer analyzer = new FileAnalyzer();
+        boolean run = true;
+
+        while (run){
+            System.out.println("\n$$$$ Меню анализатора файлов $$$$");
+            System.out.println("(1) ---- Проанализировать файл");
+            System.out.println("(2) ---- Вернуться в главное меню");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice){
+                case 1:
+                    System.out.print("Введите имя файла: ");
+                    String filename = scanner.nextLine();
+                    Map<String, Integer> results = analyzer.analyze(filename);
+                    if (results != null){
+                        analyzer.printResults(results);
+                    }
+                    Enter(scanner);
+                    break;
+                case 2:
+                    run = false;
+                    System.out.println("//// Возврат в главное меню ////");
+                    Enter(scanner);
+                    break;
+                default:
+                    System.out.println("!!!! Неверный ввод, попробуйте снова !!!!");
+                    Enter(scanner);
+            }
+        }
+    }
+
+
+
+    public static void Task8(){
+        System.out.println("\n~~~~ Лабораторная работа №8 ~~~~");
+
+        Scanner scanner = new Scanner(System.in);
+        StudentGrades grader = new StudentGrades();
+        boolean run = true;
+
+        while (run){
+            System.out.println("\n$$$$ Меню оценок студентов $$$$");
+            System.out.println("(1) ---- Gjcvjnhtnm afqk c jwtyrfvvb");
+            System.out.println("(2) ---- Показать все средние баллы");
+            System.out.println("(3) ---- Показать лучшего студента");
+            System.out.println("(4) ---- Показать худшего студента");
+            System.out.println("(5) ---- Вернуться в главное меню");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice){
+                case 1:
+                    System.out.print("Введите имя файла: ");
+                    String filename = scanner.nextLine();
+                    HashMap<String, Double> results = grader.analyze(filename);
+                    if (results != null){
+                        System.out.println(":::: Файл успешно проанализирован ::::");
+                    }
+                    Enter(scanner);
+                    break;
+                case 2:
+                    grader.printResults();
+                    Enter(scanner);
+                    break;
+                case 3:
+                    String best = grader.bestStudent();
+                    if (best != null){
+                        System.out.println("Лучший студент: " + best);
+                    } else{
+                        System.out.println("Нет данных о студентах");
+                    }
+                    Enter(scanner);
+                    break;
+                case 4:
+                    String worst = grader.worstStudent();
+                    if (worst != null){
+                        System.out.println("Худший студент: " + worst);
+                    } else{
+                        System.out.println("Нет данных о студентах");
+                    }
+                    Enter(scanner);
+                    break;
+                case 5:
+                    run = false;
+                    System.out.println("//// Возврат в главное меню ////");
+                    Enter(scanner);
+                    break;
+                default:
+                    System.out.println("!!!! Неверный ввод, попробуйте снова !!!!");
+                    Enter(scanner);
+            }
+        }
+    }
+
+
+
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
@@ -325,10 +429,10 @@ public class Main{
                     Task6();
                     break;
                 case 7:
-                    //Task7();
+                    Task7();
                     break;
                 case 8:
-                    //Task8();
+                    Task8();
                     break;
                 case 9:
                     System.out.println("//// Выход из программы ////");
