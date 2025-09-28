@@ -229,9 +229,8 @@ public class Main{
             System.out.println("(2) ---- Получить знаяение из ячейки");
             System.out.println("(3) ---- Вся таблица");
             System.out.println("(4) ---- Среднеее арифметическое");
-            System.out.println("(5) ---- Заполнить случайными числами ");
-            System.out.println("(6) ---- Размеры таблицы");
-            System.out.println("(7) ---- вернутся в главное меню");
+            System.out.println("(5) ---- Размеры таблицы");
+            System.out.println("(6) ---- вернутся в главное меню");
 
             int choice = scanner.nextInt();
 
@@ -266,18 +265,10 @@ public class Main{
                     Enter(scanner);
                     break;
                 case 5:
-                    System.out.print("Введите минимальное значение: ");
-                    int min = scanner.nextInt();
-                    System.out.print("Введите максимальное значение: ");
-                    int max = scanner.nextInt();
-                    table.fillRandom(min, max);
-                    Enter(scanner);
-                    break;
-                case 6:
                     System.out.println("Размеры таблицы: " + table.rows() + " строк, " + table.cols() + " столбцов");
                     Enter(scanner);
                     break;
-                case 7:
+                case 6:
                     run = false;
                     System.out.println("//// Возврат в главное меню ////");
                     Enter(scanner);

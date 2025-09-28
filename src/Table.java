@@ -64,14 +64,4 @@ public class Table {
     private boolean ValidPosition(int row, int col){
         return row >= 0 && row < rows && col >= 0 && col < cols;
     }
-
-    public void fillRandom(int min, int max){
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
-                data[i][j] = min + (int)(Math.random() * (max - min + 1));
-            }
-        }
-        System.out.println("Таблица заполнена случайными числами от " + min + " до " + max);
-    }
-
 }
