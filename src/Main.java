@@ -14,7 +14,7 @@ public class Main {
                     Enter(scanner);
                     break;
                 case 2:
-                    //new Task2().execute();
+                    new Task2().execute();
                     Enter(scanner);
                     break;
                 case 3:
