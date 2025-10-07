@@ -4,9 +4,14 @@ public class PrimesGeneratorTest {
     public void runTest() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите количество простых чисел (W): ");
-        int W = scanner.nextInt();
+        int w = scanner.nextInt();
 
-        PrimesGenerator generator = new PrimesGenerator(W);
+        if (w < 0) {
+            System.out.println("!!!! Ошибка: количество не может быть отрицательным !!!!");
+            return;
+        }
+
+        PrimesGenerator generator = new PrimesGenerator(w);
         List<Integer> primes = new ArrayList<>();
 
         while (generator.hasNext()) {

@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Task5 {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void execute() {
         System.out.println("\n@@@@ ЗАДАНИЕ №5 @@@@");

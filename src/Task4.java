@@ -10,6 +10,11 @@ public class Task4 {
         scanner.nextLine();
         String text = scanner.nextLine();
 
+        if (text == null || text.trim().isEmpty()) {
+            System.out.println("!!!! Ошибка: текст не может быть пустым !!!!");
+            return;
+        }
+
         Map<String, Integer> wordFrequency = countWordFrequency(text);
 
         System.out.println("\nЧастота встречаемости слов:");

@@ -26,8 +26,8 @@ public class Human implements Comparable<Human> {
         if (obj == null || getClass() != obj.getClass()) return false;
         Human human = (Human) obj;
         return age == human.age &&
-                firstName.equals(human.firstName) &&
-                lastName.equals(human.lastName);
+                Objects.equals(firstName, human.firstName) &&
+                Objects.equals(lastName, human.lastName);
     }
 
     @Override

@@ -11,32 +11,31 @@ public class Main {
             switch (choice) {
                 case 1:
                     new Task1().execute();
-                    Enter(scanner);
+                    waitForEnter(scanner);
                     break;
                 case 2:
                     new Task2().execute();
-                    Enter(scanner);
+                    waitForEnter(scanner);
                     break;
                 case 3:
-                    //new Task3().execute();
-                    Enter(scanner);
+                    new Task3().execute();
+                    waitForEnter(scanner);
                     break;
                 case 4:
-                    //new Task4().execute();
-                    Enter(scanner);
+                    new Task4().execute();
+                    waitForEnter(scanner);
                     break;
                 case 5:
-                    //new Task5().execute();
-                    Enter(scanner);
+                    new Task5().execute();
+                    waitForEnter(scanner);
                     break;
                 case 0:
                     System.out.println("//// Выход из программы ////");
                     scanner.close();
-                    Enter(scanner);
                     return;
                 default:
                     System.out.println("!!!! Неверный выбор! Попробуйте снова !!!!");
-                    Enter(scanner);
+                    waitForEnter(scanner);
             }
         }
     }
@@ -52,13 +51,15 @@ public class Main {
         System.out.print("???? Чтобы выбрать задание выбирайте команду в скобках ????");
     }
 
-    public static void Enter(Scanner scanner){
+    private static void waitForEnter(Scanner scanner) {
         System.out.print("\n.... Нажмите Enter для продолжения ....");
-        try{
+        try {
             scanner.nextLine();
-            scanner.nextLine();
-        }
-        catch (Exception e){
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+        } catch (Exception e) {
+            // Игнорируем исключения при ожидании ввода
         }
     }
 }

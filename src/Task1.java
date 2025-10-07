@@ -12,10 +12,15 @@ public class Task1 {
     public void execute() {
         System.out.println("\n@@@@ ЗАДАНИЕ №1 @@@@");
         System.out.print("Введите количество чисел (W): ");
-        int W = scanner.nextInt();
+        int w = scanner.nextInt();
 
-        int[] array = new int[W];
-        for (int i = 0; i < W; i++) {
+        if (w < 0) {
+            System.out.println("Ошибка: количество не может быть отрицательным");
+            return;
+        }
+
+        int[] array = new int[w];
+        for (int i = 0; i < w; i++) {
             array[i] = random.nextInt(101);
         }
         System.out.println("(1) Массив: " + Arrays.toString(array));
@@ -29,7 +34,7 @@ public class Task1 {
         Collections.sort(list);
         System.out.println("(3) Отсортированный по возрастанию: " + list);
 
-        Collections.sort(list, Collections.reverseOrder());
+        list.sort(Collections.reverseOrder());
         System.out.println("(4) Отсортированный в обратном порядке: " + list);
 
         Collections.shuffle(list);

@@ -27,12 +27,7 @@ public class Task3 {
         System.out.println("(5) TreeSet с компаратором по фамилии:");
         printCollection(treeSetByLastName);
 
-        Set<Human> treeSetByAge = new TreeSet<>(new Comparator<Human>() {
-            @Override
-            public int compare(Human h1, Human h2) {
-                return Integer.compare(h1.getAge(), h2.getAge());
-            }
-        });
+        Set<Human> treeSetByAge = new TreeSet<>(Comparator.comparingInt(Human::getAge));
         treeSetByAge.addAll(humans);
         System.out.println("(6) TreeSet с компаратором по возрасту:");
         printCollection(treeSetByAge);
@@ -51,7 +46,7 @@ public class Task3 {
         humans.add(new Human("Даниил", "Улискин", 19));
         humans.add(new Human("Алексей", "Сидоров", 22));
         humans.add(new Human("Женя", "Лякин", 28));
-        humans.add(new Human("Иван", "иванов", 25)); // Дубликат для демонстрации
+        humans.add(new Human("Иван", "Иванов", 25));
         return humans;
     }
 

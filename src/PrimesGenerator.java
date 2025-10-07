@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class PrimesGenerator implements Iterator<Integer> {
     private int count;
@@ -6,6 +7,9 @@ public class PrimesGenerator implements Iterator<Integer> {
     private int current;
 
     public PrimesGenerator(int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Count cannot be negative");
+        }
         this.count = count;
         this.generated = 0;
         this.current = 2;
@@ -18,6 +22,9 @@ public class PrimesGenerator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException("No more primes available");
+        }
         while (!isPrime(current)) {
             current++;
         }
