@@ -1,7 +1,13 @@
+import java.security.SecureRandom;
 import java.util.*;
 
 public class Task1 {
     private Scanner scanner = new Scanner(System.in);
+    private final SecureRandom random;
+
+    public Task1() {
+        this.random = new SecureRandom();
+    }
 
     public void execute() {
         System.out.println("\n@@@@ ЗАДАНИЕ №1 @@@@");
@@ -9,7 +15,6 @@ public class Task1 {
         int W = scanner.nextInt();
 
         int[] array = new int[W];
-        Random random = new Random();
         for (int i = 0; i < W; i++) {
             array[i] = random.nextInt(101);
         }
