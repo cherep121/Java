@@ -14,14 +14,13 @@ public class LibraryService {
     }
 
     private void loadVisitors(String filePath) {
-        try {
+        try (FileReader reader = new FileReader(filePath)) {
             Gson gson = new Gson();
-            FileReader reader = new FileReader(filePath);
             Type visitorListType = new TypeToken<List<Visitor>>(){}.getType();
             visitors = gson.fromJson(reader, visitorListType);
+            System.out.println("Файл успешно загружен. Загружено посетителей: " + visitors.size());
         } catch (Exception e) {
-            System.out.println("Ошибка при загрузке файла: " + e.getMessage());
-            visitors = new ArrayList<>();
+            System.out.println("!!!! Ошибка при загрузке файла: " + e.getMessage());
         }
     }
 
