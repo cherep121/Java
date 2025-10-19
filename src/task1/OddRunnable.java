@@ -10,7 +10,10 @@ public class OddRunnable implements Runnable {
             System.out.println(" " + Thread.currentThread().getName() + ": Нечетное число = " + i);
 
             try {
-                Thread.sleep(200);
+                // Используем wait вместо sleep для лучшего управления потоками
+                synchronized (this) {
+                    wait(200);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("!!!! Поток нечетных чисел прерван");

@@ -53,7 +53,8 @@ public class ExecutorWarehouse {
             notifyAll();
 
             try {
-                Thread.sleep(200);
+                // Используем wait вместо sleep для лучшего управления потоками
+                wait(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;

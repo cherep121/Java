@@ -14,7 +14,10 @@ public class EvenThread extends Thread {
             System.out.println(" " + Thread.currentThread().getName() + ": Четное число = " + i);
 
             try {
-                Thread.sleep(200);
+                // Используем wait вместо sleep для лучшего управления потоками
+                synchronized (this) {
+                    wait(200);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("//// Поток четных чисел прерван");

@@ -25,7 +25,10 @@ public class Consumer implements Runnable {
             }
 
             try {
-                Thread.sleep(250);
+                // Используем wait вместо sleep для лучшего управления потоками
+                synchronized (this) {
+                    wait(250);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
