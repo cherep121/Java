@@ -7,7 +7,7 @@ public class OddRunnable implements Runnable {
         System.out.println(Thread.currentThread().getName() + ": Запуск потока нечетных чисел");
 
         for (int i = 1; i <= 9; i += 2) {
-            System.out.println("🟠 " + Thread.currentThread().getName() + ": Нечетное число = " + i);
+            System.out.println(" " + Thread.currentThread().getName() + ": Нечетное число = " + i);
 
             try {
                 Thread.sleep(200);

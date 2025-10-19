@@ -33,7 +33,7 @@ public class ExecutorWarehouse {
             while (orders.isEmpty()) {
                 try {
                     System.out.println(consumerName + ": Склад пуст. Ожидание...");
-                    wait(1000);
+                    wait();
                     if (Thread.currentThread().isInterrupted()) {
                         return;
                     }
@@ -44,9 +44,11 @@ public class ExecutorWarehouse {
             }
 
             Order order = orders.poll();
-            int processed = totalProcessed.incrementAndGet();
-            System.out.println(consumerName + ": Обработан заказ: " + order +
-                    " | Всего обработано: " + processed);
+            if (order != null) {
+                int processed = totalProcessed.incrementAndGet();
+                System.out.println(consumerName + ": Обработан заказ: " + order +
+                        " | Всего обработано: " + processed);
+            }
 
             notifyAll();
 

@@ -5,6 +5,7 @@ import task2.ShoeWarehouse;
 import task2.Consumer;
 import task3.ExecutorWarehouse;
 
+import java.security.SecureRandom;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final SecureRandom secureRandom = new SecureRandom();
 
     public static void main(String[] args) {
 
@@ -45,7 +47,7 @@ public class Main {
     }
 
     private static void printMenu() {
-        System.out.println("**** Лаюораторная работа №5");
+        System.out.println("**** Лабораторная работа №5 ****");
         System.out.println("(1) ---- Задание 1");
         System.out.println("(2) ---- Задание 2");
         System.out.println("(3) ---- Задание 3");
@@ -84,7 +86,7 @@ public class Main {
             System.out.println(" Producer: запуск генерации " + orderCount + " заказов");
 
             for (int i = 1; i <= orderCount; i++) {
-                Order order = new Order(i, getRandomShoeType(), (int) (Math.random() * 10) + 1);
+                Order order = new Order(i, getRandomShoeType(), secureRandom.nextInt(10) + 1);
                 warehouse.receiveOrder(order);
                 try {
                     Thread.sleep(150);
@@ -131,7 +133,7 @@ public class Main {
         for (int i = 1; i <= orderCount; i++) {
             final int orderId = i;
             executor.submit(() -> {
-                Order order = new Order(orderId, getRandomShoeType(), (int) (Math.random() * 10) + 1);
+                Order order = new Order(orderId, getRandomShoeType(), secureRandom.nextInt(10) + 1);
                 warehouse.receiveOrder(order);
             });
         }
@@ -157,7 +159,6 @@ public class Main {
     private static void waitForEnter() {
         System.out.println("\n.... Нажмите Enter чтобы вернуться в меню ....");
         scanner.nextLine();
-        scanner.nextLine();
     }
 
     private static void exitProgram() {
@@ -182,6 +183,6 @@ public class Main {
                 "Nike Air Max", "Adidas Ultraboost", "Puma RS-X",
                 "Reebok Classic", "Vans Old Skool", "Converse Chuck Taylor"
         };
-        return shoeTypes[(int) (Math.random() * shoeTypes.length)];
+        return shoeTypes[secureRandom.nextInt(shoeTypes.length)];
     }
 }
