@@ -128,31 +128,30 @@ public class Main {
         ExecutorWarehouse warehouse = new ExecutorWarehouse();
         int orderCount = 15;
 
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        // Исправление: использование try-with-resources для ExecutorService
+        try (ExecutorService executor = Executors.newFixedThreadPool(4)) {
+            System.out.println("++++ Запуск ExecutorService с 4 потоками ++++");
 
-        System.out.println("++++ Запуск ExecutorService с 4 потоками ++++");
+            for (int i = 1; i <= orderCount; i++) {
+                final int orderId = i;
+                executor.submit(() -> {
+                    Order order = new Order(orderId, getRandomShoeType(), secureRandom.nextInt(10) + 1);
+                    warehouse.receiveOrder(order);
+                });
+            }
 
-        for (int i = 1; i <= orderCount; i++) {
-            final int orderId = i;
-            executor.submit(() -> {
-                Order order = new Order(orderId, getRandomShoeType(), secureRandom.nextInt(10) + 1);
-                warehouse.receiveOrder(order);
-            });
-        }
+            executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-1"));
+            executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-2"));
 
-        executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-1"));
-        executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-2"));
+            executor.shutdown();
 
-        executor.shutdown();
-
-        try {
             if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
                 System.out.println("!!!!  Принудительное завершение !!!!");
                 executor.shutdownNow();
             }
         } catch (InterruptedException e) {
-            executor.shutdownNow();
             Thread.currentThread().interrupt();
+            System.out.println("!!!! ExecutorService был прерван !!!!");
         }
 
         System.out.println("//// ExecutorService завершил работу");
