@@ -2,29 +2,21 @@ package task1;
 
 public class EvenThread extends Thread {
 
+    private final AbstractNumberPrinter printer;
+
     public EvenThread() {
         super("EvenThread");
+        this.printer = new AbstractNumberPrinter() {
+            @Override protected String getThreadType() { return "четных"; }
+            @Override protected int getStartNumber() { return 2; }
+            @Override protected int getEndNumber() { return 10; }
+            @Override protected int getStep() { return 2; }
+            @Override protected String getNumberType() { return "четное"; }
+        };
     }
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + ": Запуск потока четных чисел");
-
-        for (int i = 2; i <= 10; i += 2) {
-            System.out.println(" " + Thread.currentThread().getName() + ": Четное число = " + i);
-
-            try {
-                // Используем wait вместо sleep для лучшего управления потоками
-                synchronized (this) {
-                    wait(200);
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("//// Поток четных чисел прерван");
-                return;
-            }
-        }
-
-        System.out.println("//// " + Thread.currentThread().getName() + ": Поток четных чисел завершен");
+        printer.printNumbers();
     }
 }

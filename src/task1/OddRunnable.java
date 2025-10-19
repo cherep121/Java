@@ -2,25 +2,20 @@ package task1;
 
 public class OddRunnable implements Runnable {
 
+    private final AbstractNumberPrinter printer;
+
+    public OddRunnable() {
+        this.printer = new AbstractNumberPrinter() {
+            @Override protected String getThreadType() { return "нечетных"; }
+            @Override protected int getStartNumber() { return 1; }
+            @Override protected int getEndNumber() { return 9; }
+            @Override protected int getStep() { return 2; }
+            @Override protected String getNumberType() { return "нечетное"; }
+        };
+    }
+
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + ": Запуск потока нечетных чисел");
-
-        for (int i = 1; i <= 9; i += 2) {
-            System.out.println(" " + Thread.currentThread().getName() + ": Нечетное число = " + i);
-
-            try {
-                // Используем wait вместо sleep для лучшего управления потоками
-                synchronized (this) {
-                    wait(200);
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("!!!! Поток нечетных чисел прерван");
-                return;
-            }
-        }
-
-        System.out.println("//// " + Thread.currentThread().getName() + ": Поток нечетных чисел завершен");
+        printer.printNumbers();
     }
 }

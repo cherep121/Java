@@ -61,7 +61,7 @@ public class Main {
         System.out.println("\n$$$$ Задание 1 $$$$");
 
         Thread evenThread = new EvenThread();
-        Thread oddThread = Thread.ofVirtual().name("OddThread").unstarted(new OddRunnable());
+        Thread oddThread = new Thread(new OddRunnable());
 
         System.out.println("++++ Запуск потоков ++++");
 
@@ -85,7 +85,7 @@ public class Main {
         ShoeWarehouse warehouse = new ShoeWarehouse();
         int orderCount = 10;
 
-        Thread producerThread = Thread.ofVirtual().name("Producer").unstarted(() -> {
+        Thread producerThread = new Thread(() -> {
             System.out.println(" Producer: запуск генерации " + orderCount + " заказов");
 
             for (int i = 1; i <= orderCount; i++) {
@@ -99,10 +99,10 @@ public class Main {
                 }
             }
             System.out.println("//// Producer завершил генерацию заказов");
-        });
+        }, "Producer");
 
-        Thread consumer1 = Thread.ofVirtual().name("Consumer-1").unstarted(new Consumer(warehouse, "Consumer-1"));
-        Thread consumer2 = Thread.ofVirtual().name("Consumer-2").unstarted(new Consumer(warehouse, "Consumer-2"));
+        Thread consumer1 = new Thread(new Consumer(warehouse, "Consumer-1"), "Consumer-1");
+        Thread consumer2 = new Thread(new Consumer(warehouse, "Consumer-2"), "Consumer-2");
 
         producerThread.start();
         consumer1.start();
@@ -110,7 +110,6 @@ public class Main {
 
         try {
             producerThread.join();
-
             Thread.sleep(3000);
             consumer1.interrupt();
             consumer2.interrupt();
@@ -129,33 +128,30 @@ public class Main {
         ExecutorWarehouse warehouse = new ExecutorWarehouse();
         int orderCount = 15;
 
-        ExecutorService executor = null;
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        System.out.println("++++ Запуск ExecutorService с 4 потоками ++++");
+
+        for (int i = 1; i <= orderCount; i++) {
+            final int orderId = i;
+            executor.submit(() -> {
+                Order order = new Order(orderId, getRandomShoeType(), secureRandom.nextInt(10) + 1);
+                warehouse.receiveOrder(order);
+            });
+        }
+
+        executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-1"));
+        executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-2"));
+
+        executor.shutdown();
+
         try {
-            executor = Executors.newThreadPerTaskExecutor(Thread.ofVirtual().factory());
-
-            System.out.println("++++ Запуск ExecutorService с виртуальными потоками ++++");
-
-            for (int i = 1; i <= orderCount; i++) {
-                final int orderId = i;
-                executor.submit(() -> {
-                    Order order = new Order(orderId, getRandomShoeType(), secureRandom.nextInt(10) + 1);
-                    warehouse.receiveOrder(order);
-                });
-            }
-
-            executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-1"));
-            executor.submit(() -> warehouse.fulfillOrder("Executor-Consumer-2"));
-
-            executor.shutdown();
-
             if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
                 System.out.println("!!!!  Принудительное завершение !!!!");
                 executor.shutdownNow();
             }
         } catch (InterruptedException e) {
-            if (executor != null) {
-                executor.shutdownNow();
-            }
+            executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
 

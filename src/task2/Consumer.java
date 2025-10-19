@@ -2,11 +2,11 @@ package task2;
 
 public class Consumer implements Runnable {
 
-    private final ShoeWarehouse warehouse;
+    private final AbstractWarehouse warehouse;
     private final String name;
     private static final int ORDERS_TO_PROCESS = 5;
 
-    public Consumer(ShoeWarehouse warehouse, String name) {
+    public Consumer(AbstractWarehouse warehouse, String name) {
         this.warehouse = warehouse;
         this.name = name;
     }
@@ -25,10 +25,7 @@ public class Consumer implements Runnable {
             }
 
             try {
-                // Используем wait вместо sleep для лучшего управления потоками
-                synchronized (this) {
-                    wait(250);
-                }
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
