@@ -20,15 +20,12 @@ public class Invoker {
                     System.out.println("\nМетод: " + method.getName() +
                             ", аннотация @Repeat(times=" + repeat.times() + ")");
 
-                    // Вызываем метод нужное количество раз
                     for (int i = 0; i < repeat.times(); i++) {
                         System.out.print("Вызов " + (i + 1) + ": ");
 
-                        // Обрабатываем параметры метода
                         Class<?>[] paramTypes = method.getParameterTypes();
                         Object[] params = new Object[paramTypes.length];
 
-                        // Заполняем параметры значениями по умолчанию
                         for (int j = 0; j < paramTypes.length; j++) {
                             if (paramTypes[j] == int.class) {
                                 params[j] = j + 1;
@@ -45,7 +42,6 @@ public class Invoker {
 
         } catch (Exception e) {
             System.err.println("Ошибка при вызове методов: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }
