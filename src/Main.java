@@ -66,5 +66,4 @@ public class Main {
         scanner.nextLine();
         return result;
     }
-
 }
