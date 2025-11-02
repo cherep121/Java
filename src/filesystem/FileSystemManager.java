@@ -1,16 +1,13 @@
 package filesystem;
-
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Comparator;
 
 public class FileSystemManager {
-
     public static void performFileSystemOperations() {
         try {
             String surname = "Chistyukhin";
             String name = "Anton";
-
             System.out.println("$$$$ РАБОТА С ФАЙЛОВОЙ СИСТЕМОЙ $$$$");
 
             Path mainDir = Paths.get(surname);
@@ -41,38 +38,43 @@ public class FileSystemManager {
             System.out.println("Создан файл: dir1/dir2/file2.txt");
 
             System.out.println("\n$$$$ РЕКУРСИВНЫЙ ОБХОД ДИРЕКТОРИИ $$$$");
-            Files.walk(mainDir)
-                    .forEach(path -> {
-                        if (Files.isDirectory(path)) {
-                            System.out.println("D: " + mainDir.relativize(path));
-                        } else {
-                            System.out.println("F: " + mainDir.relativize(path));
-                        }
-                    });
+            // Исправление: использование try-with-resources для Stream
+            try (var stream = Files.walk(mainDir)) {
+                stream.forEach(path -> {
+                    if (Files.isDirectory(path)) {
+                        System.out.println("D: " + mainDir.relativize(path));
+                    } else {
+                        System.out.println("F: " + mainDir.relativize(path));
+                    }
+                });
+            }
 
             System.out.println("\n---- УДАЛЕНИЕ ДИРЕКТОРИИ dir1 ----");
             Path dir1 = mainDir.resolve("dir1");
-            Files.walk(dir1)
-                    .sorted(Comparator.reverseOrder())
-                    .forEach(path -> {
-                        try {
-                            Files.delete(path);
-                            System.out.println("Удалено: " + mainDir.relativize(path));
-                        } catch (IOException e) {
-                            System.err.println("Ошибка удаления: " + path);
-                        }
-                    });
+            // Исправление: использование try-with-resources для Stream
+            try (var stream = Files.walk(dir1)) {
+                stream.sorted(Comparator.reverseOrder())
+                        .forEach(path -> {
+                            try {
+                                Files.delete(path);
+                                System.out.println("Удалено: " + mainDir.relativize(path));
+                            } catch (IOException e) {
+                                System.err.println("Ошибка удаления: " + path);
+                            }
+                        });
+            }
 
             System.out.println("\n^^^^ ФИНАЛЬНОЕ СОСТОЯНИЕ ДИРЕКТОРИИ ^^^^");
-            Files.walk(mainDir)
-                    .forEach(path -> {
-                        if (Files.isDirectory(path)) {
-                            System.out.println("D: " + mainDir.relativize(path));
-                        } else {
-                            System.out.println("F: " + mainDir.relativize(path));
-                        }
-                    });
-
+            // Исправление: использование try-with-resources для Stream
+            try (var stream = Files.walk(mainDir)) {
+                stream.forEach(path -> {
+                    if (Files.isDirectory(path)) {
+                        System.out.println("D: " + mainDir.relativize(path));
+                    } else {
+                        System.out.println("F: " + mainDir.relativize(path));
+                    }
+                });
+            }
         } catch (IOException e) {
             System.err.println("!!!! Ошибка при работе с файловой системой: " + e.getMessage());
         }
