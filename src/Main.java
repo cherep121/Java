@@ -1,6 +1,5 @@
-
-
-
+import classes.Invoker;
+import filesystem.FileSystemManager;
 import java.util.Scanner;
 
 
@@ -19,15 +18,11 @@ public class Main {
                         exitProgram();
                         return;
                     case 1:
-                        executeTask1();
+                        Invoker.invokeAnnotatedMethods();
                         waitForEnter();
                         break;
                     case 2:
-                        executeTask2();
-                        waitForEnter();
-                        break;
-                    case 3:
-                        executeTask3();
+                        FileSystemManager.performFileSystemOperations();
                         waitForEnter();
                         break;
                     default:
@@ -43,10 +38,9 @@ public class Main {
     }
 
     private static void printMenu() {
-        System.out.println("**** Лабораторная работа №5");
+        System.out.println("**** Лабораторная работа №6");
         System.out.println("(1) ---- Задание 1");
         System.out.println("(2) ---- Задание 2");
-        System.out.println("(3) ---- Задание 3");
         System.out.println("(0) ---- Выход");
     }
 
@@ -58,8 +52,8 @@ public class Main {
     }
 
     private static void exitProgram() {
-        System.out.println("//// Выход из программы...");
-        System.out.println("//// Программа завершена.");
+        System.out.println("//// Выход из программы");
+        System.out.println("//// Программа завершена");
     }
 
     private static int getIntInput(String message) {
