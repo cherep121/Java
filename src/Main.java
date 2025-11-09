@@ -49,6 +49,7 @@ public class Main {
     }
 
     private static void displayMenu() {
+
         System.out.println("\n**** ГЛАВНОЕ МЕНЮ ****");
         System.out.println("(1) ---- Задание №1");
         System.out.println("(2) ---- Задание №2");
@@ -59,3 +60,17 @@ public class Main {
         System.out.println("(7) ---- Выход");
     }
 }
+
+    private static void waitForEnter(Scanner scanner) {
+        System.out.print("\n.... Нажмите Enter для продолжения ....");
+        try {
+            scanner.nextLine();
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+        } catch (Exception e) {
+            
+        }
+    }
+}
+
