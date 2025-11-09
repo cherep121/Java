@@ -1,69 +1,48 @@
-import classes.Invoker;
-import filesystem.FileSystemManager;
-import java.util.Scanner;
+import lsp.*;
+import ocp.*;
+import srp.ReportManager;
 
+import java.util.List;
 
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
-
-
     public static void main(String[] args) {
-        try {
-            while (true) {
-                printMenu();
-                int choice = getIntInput("Для выбора задания введите команду в скобках ");
+        // ---------- S ----------
+        System.out.println("$$$$ SRP Demo $$$$");
+        ReportManager manager = new ReportManager(List.of(5, 10, 15, 20));
+        manager.generateReport();
 
-                switch (choice) {
-                    case 0:
-                        exitProgram();
-                        return;
-                    case 1:
-                        Invoker.invokeAnnotatedMethods();
-                        waitForEnter();
-                        break;
-                    case 2:
-                        FileSystemManager.performFileSystemOperations();
-                        waitForEnter();
-                        break;
-                    default:
-                        System.out.println("!!!! Неверный выбор. Попробуйте снова !!!!");
-                        waitForEnter();
-                }
+        // ---------- O ----------
+        System.out.println("\n$$$$ OCP Demo $$$$");
+        DiscountCalculator calculator = new DiscountCalculator();
+        System.out.println("Regular: " + calculator.calculateDiscount(new RegularDiscount(), 1000));
+        System.out.println("VIP: " + calculator.calculateDiscount(new VipDiscount(), 1000));
+        System.out.println("Super VIP: " + calculator.calculateDiscount(new SuperVipDiscount(), 1000));
+        System.out.println("Student: " + calculator.calculateDiscount(new StudentDiscount(), 1000));
 
-                System.out.println("\n" + "=".repeat(50) + "\n");
-            }
-        } finally {
-            scanner.close();
+        // ---------- L ----------
+        System.out.println("\n$$$$ LSP Demo $$$$");
+        displayFlyingBird(new Sparrow());
+        displayNonFlyingBird(new Penguin());
+
+        System.out.println("\n$$$$ All birds eating $$$$");
+        displayBirdEating(new Sparrow());
+        displayBirdEating(new Penguin());
+    }
+
+    public static void displayFlyingBird(FlyingBird bird) {
+        bird.eat();
+        bird.fly();
+    }
+
+    public static void displayNonFlyingBird(NonFlyingBird bird) {
+        bird.eat();
+        bird.walk();
+        if (bird instanceof Penguin penguin) {
+            penguin.swim();
         }
     }
 
-    private static void printMenu() {
-        System.out.println("**** Лабораторная работа №6");
-        System.out.println("(1) ---- Задание 1");
-        System.out.println("(2) ---- Задание 2");
-        System.out.println("(0) ---- Выход");
-    }
-
-
-
-    private static void waitForEnter() {
-        System.out.println("\n.... Нажмите Enter чтобы вернуться в меню ....");
-        scanner.nextLine();
-    }
-
-    private static void exitProgram() {
-        System.out.println("//// Выход из программы");
-        System.out.println("//// Программа завершена");
-    }
-
-    private static int getIntInput(String message) {
-        System.out.print(message);
-        while (!scanner.hasNextInt()) {
-            System.out.print("Введите число: ");
-            scanner.next();
-        }
-        int result = scanner.nextInt();
-        scanner.nextLine();
-        return result;
+    public static void displayBirdEating(Bird bird) {
+        bird.eat();
     }
 }
