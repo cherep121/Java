@@ -9,6 +9,8 @@ public class BookManager {
     private Connection connection;
     private Scanner scanner;
 
+    private static final String DATA_RETRIEVAL_ERROR = "Ошибка получения данных: ";
+
     public BookManager(Connection connection) {
         this.connection = connection;
         this.scanner = new Scanner(System.in);
@@ -119,7 +121,7 @@ public class BookManager {
                 System.out.println(book);
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
 
@@ -136,7 +138,7 @@ public class BookManager {
                 System.out.println(book);
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
 
@@ -238,7 +240,7 @@ public class BookManager {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
 
@@ -261,7 +263,7 @@ public class BookManager {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
 
@@ -299,10 +301,9 @@ public class BookManager {
             }
             System.out.println("Всего посетителей: " + count);
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
-
 
     public void showAllBooks() {
         String sql = "SELECT * FROM books";
@@ -319,10 +320,9 @@ public class BookManager {
             }
             System.out.println("Всего книг: " + count);
         } catch (SQLException e) {
-            System.out.println("Ошибка получения данных: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
-
 
     public void findBooksByAuthor(String author) {
         String sql = "SELECT * FROM books WHERE author LIKE ?";
@@ -345,7 +345,6 @@ public class BookManager {
         }
     }
 
-
     public void showStatistics() {
         String sqlBooks = "SELECT COUNT(*) as book_count FROM books";
         String sqlVisitors = "SELECT COUNT(*) as visitor_count FROM visitors";
@@ -367,7 +366,7 @@ public class BookManager {
                 System.out.println("Подписано на рассылку: " + rsSubscribed.getInt("subscribed_count"));
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка получения статистики: " + e.getMessage());
+            System.out.println(DATA_RETRIEVAL_ERROR + e.getMessage());
         }
     }
 
